@@ -1,9 +1,28 @@
 class WordGuesserGame
   # add the necessary class methods, attributes, etc. here
   # to make the tests in spec/wordguesser_game_spec.rb pass.
+  attr_accessor :word, :guesses, :wrong_guesses
 
-  def initialize(word)
-    @word = word
+  def initialize(new_word)
+    @word = new_word
+    @guesses = ''
+    @wrong_guesses = ''
+  end
+
+  def guess(letter)
+    raise ArgumentError, 'nil is not valid' unless letter
+    raise ArgumentError, 'Invalid guess' if letter.match(/^[^a-zA-Z]*$/)
+
+    letter = letter.downcase
+    valid = @word.include? letter
+    return false if (@guesses + @wrong_guesses).include? letter
+
+    if valid
+      @guesses += letter
+    else
+      @wrong_guesses += letter
+    end
+    valid
   end
 
   # Get a word from remote "random word" service
