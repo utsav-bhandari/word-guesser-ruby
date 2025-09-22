@@ -2,11 +2,13 @@ class WordGuesserGame
   # add the necessary class methods, attributes, etc. here
   # to make the tests in spec/wordguesser_game_spec.rb pass.
   attr_accessor :word, :guesses, :wrong_guesses
+  attr_reader :num_guesses
 
   def initialize(new_word)
     @word = new_word
     @guesses = ''
     @wrong_guesses = ''
+    @num_wrong_guesses = 0
   end
 
   def guess(letter)
@@ -19,6 +21,7 @@ class WordGuesserGame
     if @word.include? letter
       @guesses += letter
     else
+      @num_wrong_guesses += 1
       @wrong_guesses += letter
     end
     true
@@ -30,6 +33,12 @@ class WordGuesserGame
       res += @guesses.include?(char) ? char : '-'
     end
     res
+  end
+
+  def check_win_or_lose
+    return :lose if @num_wrong_guesses == 7
+
+    word_with_guesses.include?('-') ? :play : :win
   end
 
   # Get a word from remote "random word" service
