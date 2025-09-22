@@ -2,3 +2,4 @@ Demo:
 https://salty-wave-92859-bb353b74d4fd.herokuapp.com/
 
 Paste the URL for your deployed game below:
+https://infinite-ridge-45827-3fa30bd6c18a.herokuapp.com/
