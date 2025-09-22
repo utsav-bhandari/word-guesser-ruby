@@ -34,8 +34,13 @@ class WordGuesserApp < Sinatra::Base
   # If a guess is repeated, set flash[:message] to "You have already used that letter."
   # If a guess is invalid, set flash[:message] to "Invalid guess."
   post '/guess' do
-    params[:guess].to_s[0]
-    ### YOUR CODE HERE ###
+    letter = params[:guess].to_s[0]
+    begin
+      valid = @game.guess(letter)
+      flash[:message] = "You have already used the letter '#{letter}'" unless valid
+    rescue ArgumentError
+      flash[:message] = 'Invalid guess'
+    end
     redirect '/show'
   end
 
@@ -46,6 +51,7 @@ class WordGuesserApp < Sinatra::Base
   # wrong_guesses and word_with_guesses from @game.
   get '/show' do
     ### YOUR CODE HERE ###
+
     erb :show # You may change/remove this line
   end
 
