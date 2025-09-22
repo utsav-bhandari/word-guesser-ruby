@@ -14,15 +14,22 @@ class WordGuesserGame
     raise ArgumentError, 'Invalid guess' if letter.match(/^[^a-zA-Z]*$/)
 
     letter = letter.downcase
-    valid = @word.include? letter
     return false if (@guesses + @wrong_guesses).include? letter
 
-    if valid
+    if @word.include? letter
       @guesses += letter
     else
       @wrong_guesses += letter
     end
-    valid
+    true
+  end
+
+  def word_with_guesses
+    res = ''
+    @word.chars.each do |char|
+      res += @guesses.include?(char) ? char : '-'
+    end
+    res
   end
 
   # Get a word from remote "random word" service
